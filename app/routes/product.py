@@ -45,6 +45,14 @@ def discount_product(product_id):
     return build_response(status="success", code=200, message="Product updated", data=product_db[product_id])
 
 
+##DELETE2 물건 정보 삭제
+@product_bp.route('/<product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    if product_id not in product_db:
+        return product_not_found_response()
+    
+    del product_db[product_id]
+    return build_response(status="success", code=204)
 
 
 
