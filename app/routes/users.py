@@ -35,12 +35,14 @@ def get_users():
         return build_response(status="fail", code=404, message="No users found")
     return build_response(status="success", code=200, message="Users retrived", data=list(user_db.values()))
 
+
 #GET2 특정 사용자 조회
 @user_bp.route('/<user_id>', methods=['GET'])
 def get_user(user_id):
     if user_id not in user_db:
         return user_not_found_response()
     return build_response(status="success", code=200, message="User retrived", data=user_db[user_id])
+
 
 #PUT1 사용자 정보 수정
 @user_bp.route('/<user_id>', methods=['PUT'])
@@ -51,6 +53,7 @@ def update_user(user_id):
     body = request.get_json()
     user_db[user_id].update(body)
     return build_response(status="success", code=200, message="User updated", data=user_db[user_id])
+
 
 #DELETE1 사용자 정보 삭제
 @user_bp.route('/<user_id>', methods=['DELETE'])
