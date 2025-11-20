@@ -42,7 +42,14 @@ def get_user(user_id):
         return build_response(status="fail", code=404, message="User not found")
     return build_response(status="success", code=200, message="User retrived", data=user_db[user_id])
 
-
+#PUT1 사용자 정보 수정
+@user_bp.route('/<user_id>', methods=['PUT'])
+def update_user(user_id):
+    if user_id not in user_db:
+        return build_response(status="fail", code=404, message="No users found")
+    body = request.get_json()
+    user_db[user_id].update(body)
+    return build_response(status="success", code=200, message="User updated", data=user_db[user_id])
 
 
 #DELETE
