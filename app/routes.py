@@ -28,7 +28,12 @@ def create_user():
     return build_response(status="success", code=201, message="User created", data=user_db)
 
 
-#GET
+#GET 사용자 목록 조회
+@user_bp.route('/', methods=['GET'])
+def get_users():
+    if not user_db:
+        return build_response(status="fail", code=404, message="No users found")
+    return build_response(status="success", code=200, message="Users retrived", data=list(user_db.values()))
 
 #PUT
 
