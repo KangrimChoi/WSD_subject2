@@ -1,0 +1,33 @@
+# 가상환경 (Virtual Environments)
+# venv, env 등 다양한 이름의 가상환경 폴더를 무시합니다.
+venv/
+env/
+.venv/
+ENV/
+
+# 파이썬 캐시 파일 (Python cache files)
+# 파이썬 실행 시 자동으로 생성되는 바이트코드 파일들을 무시합니다.
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE 및 에디터 설정 파일 (IDE and editor configuration)
+# VSCode, PyCharm 등 개발 도구의 설정 파일을 무시합니다.
+.vscode/
+.idea/
+
+# Flask 인스턴스 폴더 (Flask instance folder)
+# 데이터베이스 파일이나 시크릿 키 등 민감한 정보를 담는 폴더를 무시합니다.
+instance/
+
+# 로그 파일 (Log files)
+*.log
+
+# 운영체제 생성 파일 (Operating system generated files)
+.DS_Store
+Thumbs.db
+
+# 환경 변수 파일 (Environment variables)
+# API 키, 데이터베이스 접속 정보 등 민감한 정보를 담는 파일을 무시합니다.
+.env
