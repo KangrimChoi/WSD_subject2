@@ -48,6 +48,7 @@ def discount_product(product_id):
 ##DELETE2 물건 정보 삭제
 @product_bp.route('/<product_id>', methods=['DELETE'])
 def delete_product(product_id):
+    ## [ERROR]: product가 존재하지 않은 경우 (404)
     if product_id not in product_db:
         return product_not_found_response()
     

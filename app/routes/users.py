@@ -17,9 +17,12 @@ user_db = {
 @user_bp.route('/', methods=['POST'])
 def create_user():
     body = request.get_json()
-    if not body or 'id' not in body or 'name' not in body:
+    
+    ## [ERROR]: 유효하지 않은 json 구조인 경우 (400)
+    if not body or 'id' not in body or 'name' not in body or 'email' not in body:
         return build_response(status="fail", code=400, message="Invalid request body")
     
+    ## [ERROR]: 이미 존재하는 사용자인 경우 (400)
     user_id = body['id']
     if user_id in user_db:
         return build_response(status="fail", code=400, message="User already exists")
@@ -31,6 +34,8 @@ def create_user():
 #GET1 사용자 목록 조회
 @user_bp.route('/', methods=['GET'])
 def get_users():
+    
+    ## [ERROR]: user_db가 비어있는 경우 (404)
     if not user_db:
         return build_response(status="fail", code=404, message="No users found")
     return build_response(status="success", code=200, message="Users retrived", data=list(user_db.values()))
@@ -39,6 +44,8 @@ def get_users():
 #GET2 특정 사용자 조회
 @user_bp.route('/<user_id>', methods=['GET'])
 def get_user(user_id):
+    
+    ## [ERROR]: user가 존재하지 않는 경우 (404)
     if user_id not in user_db:
         return user_not_found_response()
     return build_response(status="success", code=200, message="User retrived", data=user_db[user_id])
@@ -47,10 +54,16 @@ def get_user(user_id):
 #PUT1 사용자 정보 수정
 @user_bp.route('/<user_id>', methods=['PUT'])
 def update_user(user_id):
+    
+    ## [ERROR]: user가 존재하지 않는 경우 (404)
     if user_id not in user_db:
         return user_not_found_response()
     
+    ## [ERROR]: 유효하지 않은 json 구조인 경우 (400)
     body = request.get_json()
+    if not body or 'id' not in body or 'name' not in body or 'email' not in body:
+        return build_response(status="fail", code=400, message="Invalid request body")
+    
     user_db[user_id].update(body)
     return build_response(status="success", code=200, message="User updated", data=user_db[user_id])
 
@@ -58,6 +71,8 @@ def update_user(user_id):
 #DELETE1 사용자 정보 삭제
 @user_bp.route('/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
+    
+    ## [ERROR]: user가 존재하지 않는 경우 (404)
     if user_id not in user_db:
         return user_not_found_response()
     
