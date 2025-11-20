@@ -13,7 +13,7 @@ user_db = {
     }
 }
 
-#POST 사용자 생성
+#POST1 사용자 생성
 @user_bp.route('/', methods=['POST'])
 def create_user():
     body = request.get_json()
@@ -28,13 +28,21 @@ def create_user():
     return build_response(status="success", code=201, message="User created", data=user_db)
 
 
-#GET 사용자 목록 조회
+#GET1 사용자 목록 조회
 @user_bp.route('/', methods=['GET'])
 def get_users():
     if not user_db:
         return build_response(status="fail", code=404, message="No users found")
     return build_response(status="success", code=200, message="Users retrived", data=list(user_db.values()))
 
-#PUT
+#GET2 특정 사용자 조회
+@user_bp.route('/<user_id>', methods=['GET'])
+def get_user(user_id):
+    if user_id not in user_db:
+        return build_response(status="fail", code=404, message="User not found")
+    return build_response(status="success", code=200, message="User retrived", data=user_db[user_id])
+
+
+
 
 #DELETE
